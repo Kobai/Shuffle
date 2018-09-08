@@ -22,6 +22,7 @@ class LoginForm extends React.Component {
   onButtonPress() {
     const { email, password } = this.state;
     this.setState({ error: '', loading: true });
+    this.props.navigation.navigate('main');
   }
 
   onLoginFail() {
