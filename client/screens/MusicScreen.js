@@ -21,8 +21,8 @@ class MusicScreen extends React.Component {
     modalVisible: false
   };
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Settings'
-    // tabBarIcon: () => <Entypo name="folder-music" size={25} color="#03A9F4" />
+    headerTitle: 'Settings',
+    tabBarIcon: () => <Entypo name="folder-music" size={25} color="#03A9F4" />
   });
 
   setModalVisible(visible) {

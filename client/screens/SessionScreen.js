@@ -8,8 +8,15 @@ import {
   Image,
   KeyboardAvoidingView
 } from 'react-native';
+import { Entypo, MaterialIcons } from '@expo/vector-icons';
 
 export default class SessionScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: 'Settings',
+    tabBarIcon: () => (
+      <MaterialIcons name="group-add" size={25} color="#03A9F4" />
+    )
+  });
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
