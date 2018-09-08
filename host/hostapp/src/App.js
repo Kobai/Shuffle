@@ -42,10 +42,18 @@ class App extends Component {
         <Helmet>
           <style>{'body{background-color: #1B9CFC;}'}</style>
         </Helmet>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
+        <div className="videoPlay"></div>
+        <div className="songChoice">
           <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
+          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
+          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
+          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
+          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
+          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
+          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
+          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
+          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
+        </div>
       </div>
     );
   }
