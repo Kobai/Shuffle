@@ -54,7 +54,8 @@ const styles = {
     textAlign: 'center'
   },
   buttonStyle: {
-    backgroundColor: '#0288D1'
+    backgroundColor: '#0288D1',
+    marginTop: Platform.OS === 'android' ? 0 : 18
   }
 };
 
