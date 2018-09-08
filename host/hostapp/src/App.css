@@ -14,9 +14,12 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+  background-color:#1B9CFC;
+  position: fixed;
+  height: 100px;
+  top: 0px;
+  left: 0px;
+  width: 100%;
   color: white;
 }
 
@@ -34,15 +37,22 @@
 }
 
 .videoPlay{
-  height: 700px;
-  width: 700px;
   background-color: white;
   position: fixed;
-  margin: 40px;
-  margin-left: 120px;
+  left: 90px;
+  top: 100px;
 }
 
 .songChoice{
-  margin: 40px;
+  margin-right: 60px;
+  margin-top: 90px;
   float: right;
+}
+
+.leftSide{
+  position: fixed;
+  color: white;
+  left: 90px;
+  top: 810px;
+  font-size: 2rem;
 }

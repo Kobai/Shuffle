@@ -8,6 +8,7 @@ import {
   RemoteMongoClient
 } from "mongodb-stitch-browser-sdk";
 import Card  from "./components/Card/Card";
+import YouTube from 'react-youtube';
 
 
 const client = Stitch.initializeDefaultAppClient('pennapps-mnfjh');
@@ -37,13 +38,27 @@ class App extends Component {
   }
 
   render() {
+    const opts = {
+      height: 700,
+      width: 1100,
+      playerVars: { autoplay: 1}
+    };
     return (
       <div className="App">
         <Helmet>
           <style>{'body{background-color: #1B9CFC;}'}</style>
         </Helmet>
-        <div className="videoPlay"></div>
+        <div className="App-header">
+        </div>
+          <YouTube
+            className = "videoPlay"
+            videoId="QoitiIbdeaM"
+            opts={opts} />
+        <div className="leftSide">
+          Currently Playing: Fireflies
+        </div>
         <div className="songChoice">
+          <Card info={{img: "https://img.youtube.com/vi/QoitiIbdeaM/0.jpg",songTitle: "hello", artist:"world"}}/>
           <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
           <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
           <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
@@ -56,7 +71,7 @@ class App extends Component {
         </div>
       </div>
     );
-  }
+  } 
 }
 
 export default App;
