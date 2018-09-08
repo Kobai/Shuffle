@@ -1,55 +1,50 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Platform } from 'react-native';
 import {
   createBottomTabNavigator,
-  createStackNavigator
+  createStackNavigator,
+  TabBarBottom
 } from 'react-navigation';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MusicScreen from './screens/MusicScreen';
-import QRScreen from './screens/QRScreen';
+import SessionScreen from './screens/SessionScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegScreen from './screens/RegScreen';
 
-const MainNavigator = createStackNavigator({
-  welcome: {
-    screen: WelcomeScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  main: {
-    screen: createBottomTabNavigator(
-      {
-        Music: { screen: MusicScreen },
-        Share: { screen: QRScreen }
-      },
-      {
-        navigationOptions: {
-          tabBarVisible: true,
+const MainNavigator = createBottomTabNavigator(
+  {
+    welcome: {
+      screen: WelcomeScreen
+    },
+    auth: { screen: LoginScreen },
+    reg: { screen: RegScreen },
+    main: {
+      screen: createBottomTabNavigator(
+        {
+          Session: { screen: SessionScreen },
+          Music: { screen: MusicScreen }
+        },
+        {
           tabBarPosition: 'bottom',
-          animationEnabled: true,
-          swipeEnabled: true,
           tabBarOptions: {
-            showIcon: true,
-            labelStyle: {
-              fontSize: 10
-            },
-            style: {
-              paddingTop: 10
-            },
-            tabStyle: {
-              height: 49
-            },
-            iconStyle: {
-              flexGrow: 0,
-              marginTop: 10
-            }
+            labelStyle: { fontSize: 12 }
           }
         }
-      }
-    )
+      )
+    }
+  },
+  {
+    navigationOptions: {
+      tabBarVisible: false
+    },
+    lazyLoad: true
   }
-});
+);
 
 export default class App extends React.Component {
+  componentWillMount() {
+    console.disableYellowBox = true;
+  }
   render() {
     return <MainNavigator />;
   }
