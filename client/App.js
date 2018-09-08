@@ -27,7 +27,12 @@ const MainNavigator = createBottomTabNavigator(
         {
           tabBarPosition: 'bottom',
           tabBarOptions: {
-            labelStyle: { fontSize: 12 }
+            labelStyle: { fontSize: 12 },
+            style: {
+              backgroundColor: '#cce7e8',
+              paddingTop: 8
+            },
+            activeTintColor: '#620266'
           }
         }
       )
