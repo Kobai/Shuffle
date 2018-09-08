@@ -3,6 +3,9 @@
 }
 .body{
   background-color: #1B9CFC;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
 }
 
 .App-logo {
@@ -28,4 +31,18 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.videoPlay{
+  height: 700px;
+  width: 700px;
+  background-color: white;
+  position: fixed;
+  margin: 40px;
+  margin-left: 120px;
+}
+
+.songChoice{
+  margin: 40px;
+  float: right;
 }
