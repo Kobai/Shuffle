@@ -77,7 +77,7 @@ class MusicScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Header headerText="PennBook" />
+        <Header headerText="Shuffle" />
         <FlatList
           style={{ flex: 1 }}
           data={this.state.data}
