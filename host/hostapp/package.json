@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "mongodb-stitch-browser-sdk": "^4.0.13",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
+    "react-helmet": "^5.2.0",
     "react-scripts": "1.1.5"
   },
   "scripts": {
