@@ -12,10 +12,9 @@ import CardSection from '../../common/CardSection';
 import Spinner from '../../common/Spinner';
 import { withNavigation } from 'react-navigation';
 
-class LoginForm extends React.Component {
+class SessionForm extends React.Component {
   state = {
-    email: '',
-    password: '',
+    sessionID: '',
     error: '',
     loading: false
   };
@@ -25,15 +24,7 @@ class LoginForm extends React.Component {
   }
 
   onLoginFail() {
-    this.setState({ error: 'Authentication Failed', loading: false });
-  }
-  onLoginSuccess() {
-    this.setState({
-      email: '',
-      password: '',
-      loading: false,
-      error: ''
-    });
+    this.setState({ error: 'Registration Failed - Bad Input', loading: false });
   }
 
   renderButton() {
@@ -45,51 +36,32 @@ class LoginForm extends React.Component {
         style={styles.buttonContainer}
         onPress={this.onButtonPress.bind(this)}
       >
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>Join Session</Text>
       </TouchableOpacity>
     );
   }
-
   render() {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <TextInput
-          placeholder="user@email.com"
+          placeholder="Session ID"
           placeholderTextColor="rgba(255,255,255,0.8)"
-          returnKeyType="next"
-          onSubmitEditing={() => this.passwordInput.focus()}
-          keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
           style={styles.input}
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
+          onChangeText={id => this.setState({ SessionID: id })}
+          value={this.state.username}
         />
-        <TextInput
-          placeholder="password"
-          placeholderTextColor="rgba(255,255,255,0.8)"
-          returnKeyType="go"
-          secureTextEntry
-          style={styles.input}
-          ref={inputs => (this.passwordInput = inputs)}
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
-        />
+
         <Text style={styles.errorTextStyle}>{this.state.error}</Text>
         {this.renderButton()}
-        <TouchableOpacity
-          style={styles.joinContainer}
-          onPress={() => this.props.navigation.navigate('reg')}
-        >
-          <Text style={styles.joinText}>Not a member? Join Today</Text>
-        </TouchableOpacity>
       </View>
     );
   }
 }
 
-export default withNavigation(LoginForm);
+export default withNavigation(SessionForm);
 
 const styles = {
   container: {

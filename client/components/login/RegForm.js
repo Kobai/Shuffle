@@ -23,14 +23,6 @@ class RegistrationForm extends React.Component {
   onButtonPress() {
     const { email, password } = this.state;
     this.setState({ error: '', loading: true });
-
-    // firebase
-    //   .auth()
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then(() => {
-    //     this.props.setName(this.state.username);
-    //   })
-    //   .catch(this.onLoginFail.bind(this));
   }
 
   onLoginFail() {
