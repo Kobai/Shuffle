@@ -9,8 +9,9 @@ import {
 import Card  from "./components/Card/Card";
 import YouTube from 'react-youtube';
 import logo from './logo.png';
+import socketIOClient from 'socket.io-client';
 
-
+const socket = socketIOClient("http://localhost:4001");
 const client = Stitch.initializeDefaultAppClient('pennapps-mnfjh');
 const db = client.getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas').db('data');
 
@@ -58,6 +59,7 @@ class App extends Component {
     .loginWithCredential(credentials)
     .then(this.getSongs)
     .catch(console.error);
+    socket.on('update_ranking', this.getSongs);
   }
 
   render() {
