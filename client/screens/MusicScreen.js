@@ -19,6 +19,9 @@ import Card from '../common/Card';
 import CardSection from '../common/CardSection';
 import Button from '../common/Button';
 import Header from '../common/Header.js';
+import SocketIOClient from 'socket.io-client';
+
+const socket = SocketIOClient("http://localhost:4001");
 
 class MusicScreen extends React.Component {
   constructor(props) {
@@ -26,7 +29,7 @@ class MusicScreen extends React.Component {
 
     this.client = null;
     this.state = {
-      data: [],
+      songData: [],
       isAuthenticated: false,
       user: null
     };
@@ -52,16 +55,29 @@ class MusicScreen extends React.Component {
       'raver1@pennapps.com',
       'password123'
     );
-    //const user = await client.auth.loginWithCredential(credential);
-    //this.setState({ user });
 
+    const user = await client.auth.loginWithCredential(credential);
+    // this.setState({ user });
+    console.log('test:');
     db.collection('playlist')
       .find({}, { limit: 50 })
       .asArray()
-      .then(songs => console.log(songs))
+      .then(songs => this.setState({ songData: songs[0].songs }))
+      .then(() => console.log(this.state.songData))
       .catch(err => console.log(err));
-
+    console.log(this.state.songData);
     console.disableYellowBox = true;
+
+    socket.on("update_ranking", ()=> {
+      this.setState({songData:[]})
+      db.collection('playlist')
+      .find({}, { limit: 50 })
+      .asArray()
+      .then(songs => this.setState({ songData: songs[0].songs }))
+      .then(() => console.log(this.state.songData))
+      .catch(err => console.log(err));
+      console.log("rerendered");
+    });
   }
 
   renderHeader = () => {
@@ -101,26 +117,81 @@ class MusicScreen extends React.Component {
     );
   };
 
+  addVote = async title => {
+    console.log(title);
+    const db = this.client
+      .getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas')
+      .db('data');
+    const result = await db
+      .collection('playlist')
+      .updateOne(
+        { 'songs.title': title },
+        { $inc: { 'songs.$.vote_count': 1 } }
+      );
+        socket.emit("voted","misc");
+    // db.getCollection('playlist')
+    //   .update({ title: 'Hotline Bling' }, { $set: { vote_count: 100 } })
+    //   .then(() => console.log('success'))
+    //   .catch(err => console.log('lll'));
+    // console.log('test');
+  };
+
   render() {
+    let songArr = this.state.songData;
+    console.log(songArr);
+    songArr = songArr.sort(function(a, b) {
+      if (a.vote_count > b.vote_count) {
+        return -1;
+      } else if (a.vote_count < b.vote_count) {
+        return 1;
+      } else {
+        return a.title > b.title ? -1 : 1;
+      }
+    });
+    console.log("_____________________________________________________");
+    console.log(songArr);
     return (
       <View style={{ flex: 1 }}>
-        <Header headerText="Shuffle" />
+        <Header headerText="Shuffle " />
         <FlatList
           style={{ flex: 1 }}
-          data={this.state.data}
+          data={songArr}
           renderItem={({ item }) => (
             <Card>
               <CardSection>
                 <View style={styles.thumbnailContainerStyle}>
                   <Image
                     style={styles.thumbnailStyle}
-                    source={{ uri: item.image }}
+                    source={{
+                      uri:
+                        'https://img.youtube.com/vi/' +
+                        item.youtube_link.split('=')[1] +
+                        '/0.jpg'
+                    }}
                     resizeMode="contain"
                   />
                 </View>
                 <View style={styles.headerContentStyle}>
-                  <Text style={styles.headerTextStyle}>{item.title}</Text>
-                  <Text style={{ marginTop: 10 }}>{item.artist}</Text>
+                  <Text style={{ fontSize: 22, textAlign: 'center' }}>
+                    {item.title}
+                  </Text>
+                  <Text style={{ marginTop: 10, fontSize: 18 }}>
+                    {item.artist}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'black'
+                  }}
+                >
+                  <Button
+                    onPress={() => this.addVote(item.title)}
+                    style={{ paddingTop: 33 }}
+                  >
+                    <MaterialIcons name="add" size={25} />
+                  </Button>
                 </View>
               </CardSection>
             </Card>
@@ -138,15 +209,14 @@ const styles = {
   headerContentStyle: {
     flexDirection: 'column',
     justifyContent: 'center',
-
     alignItems: 'center'
   },
   headerTextStyle: {
     fontSize: 22
   },
   thumbnailStyle: {
-    height: 50,
-    width: 50
+    height: 80,
+    width: 80
   },
   thumbnailContainerStyle: {
     justifyContent: 'center',

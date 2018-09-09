@@ -17,8 +17,9 @@ class Card extends Component {
                     <div className = "textContainer">
                         <div className = "songTitle">{this.props.info.title}</div>
                         <div className = "artist">{this.props.info.artist}</div>
+                        <div className = "ranking">Votes: {this.props.info.vote_count}</div>
                     </div>
-                    <div className = "ranking">Votes: {this.props.info.vote_count}</div>
+                    
                 </div>
             </div>
         );
