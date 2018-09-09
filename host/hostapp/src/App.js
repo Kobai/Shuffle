@@ -20,7 +20,7 @@ class App extends Component {
     super();
     this.state ={
         songData: [],
-        currentSongName: "None being played",
+        currentSongName: "None Being Played",
         currentSongId: ''
     };
     this.getSongs = this.getSongs.bind(this);
