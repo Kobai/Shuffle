@@ -24,7 +24,7 @@ const styles = {
   },
   textStyle: {
     opacity: 1,
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     fontSize: 20
   }
