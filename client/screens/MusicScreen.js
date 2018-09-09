@@ -19,6 +19,9 @@ import Card from '../common/Card';
 import CardSection from '../common/CardSection';
 import Button from '../common/Button';
 import Header from '../common/Header.js';
+import SocketIOClient from 'socket.io-client';
+
+const socket = SocketIOClient("http://localhost:4001");
 
 class MusicScreen extends React.Component {
   constructor(props) {
@@ -64,6 +67,17 @@ class MusicScreen extends React.Component {
       .catch(err => console.log(err));
     console.log(this.state.songData);
     console.disableYellowBox = true;
+
+    socket.on("update_ranking", ()=> {
+      this.setState({songData:[]})
+      db.collection('playlist')
+      .find({}, { limit: 50 })
+      .asArray()
+      .then(songs => this.setState({ songData: songs[0].songs }))
+      .then(() => console.log(this.state.songData))
+      .catch(err => console.log(err));
+      console.log("rerendered");
+    });
   }
 
   renderHeader = () => {
@@ -108,15 +122,13 @@ class MusicScreen extends React.Component {
     const db = this.client
       .getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas')
       .db('data');
-    console.log('33');
     const result = await db
       .collection('playlist')
       .updateOne(
         { 'songs.title': title },
         { $inc: { 'songs.$.vote_count': 1 } }
       );
-    console.log('55');
-
+        socket.emit("voted","misc");
     // db.getCollection('playlist')
     //   .update({ title: 'Hotline Bling' }, { $set: { vote_count: 100 } })
     //   .then(() => console.log('success'))
@@ -126,6 +138,7 @@ class MusicScreen extends React.Component {
 
   render() {
     let songArr = this.state.songData;
+    console.log(songArr);
     songArr = songArr.sort(function(a, b) {
       if (a.vote_count > b.vote_count) {
         return -1;
@@ -135,6 +148,8 @@ class MusicScreen extends React.Component {
         return a.title > b.title ? -1 : 1;
       }
     });
+    console.log("_____________________________________________________");
+    console.log(songArr);
     return (
       <View style={{ flex: 1 }}>
         <Header headerText="Shuffle " />
