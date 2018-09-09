@@ -10,16 +10,28 @@ import {
 
 import { List, ListItem, SearchBar } from 'react-native-elements';
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
+import {
+  Stitch,
+  UserPasswordCredential,
+  RemoteMongoClient
+} from 'mongodb-stitch-react-native-sdk';
 import Card from '../common/Card';
 import CardSection from '../common/CardSection';
 import Button from '../common/Button';
 import Header from '../common/Header.js';
 
 class MusicScreen extends React.Component {
-  state = {
-    data: [],
-    modalVisible: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.client = null;
+    this.state = {
+      data: [],
+      isAuthenticated: false,
+      user: null
+    };
+  }
+
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'Settings',
     tabBarIcon: () => <Entypo name="folder-music" size={25} color="#03A9F4" />
@@ -27,6 +39,29 @@ class MusicScreen extends React.Component {
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
+  }
+
+  async componentDidMount() {
+    const client = await Stitch.initializeDefaultAppClient('pennapps-mnfjh'); //app ID
+    const db = client
+      .getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas')
+      .db('data');
+    this.client = client;
+
+    const credential = new UserPasswordCredential(
+      'raver1@pennapps.com',
+      'password123'
+    );
+    //const user = await client.auth.loginWithCredential(credential);
+    //this.setState({ user });
+
+    db.collection('playlist')
+      .find({}, { limit: 50 })
+      .asArray()
+      .then(songs => console.log(songs))
+      .catch(err => console.log(err));
+
+    console.disableYellowBox = true;
   }
 
   renderHeader = () => {
@@ -62,15 +97,7 @@ class MusicScreen extends React.Component {
           justifyContent: 'center',
           alignItems: 'center'
         }}
-      >
-        <Button
-          onPress={() => {
-            this.setModalVisible(true);
-          }}
-        >
-          <MaterialIcons name="add" size={40} />
-        </Button>
-      </View>
+      />
     );
   };
 
@@ -102,26 +129,6 @@ class MusicScreen extends React.Component {
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
         />
-        <Modal
-          animationType="fade"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            alert('Modal has been closed.');
-          }}
-        >
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                this.setModalVisible(!this.state.modalVisible);
-              }}
-            >
-              <Text>Close Modal</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
       </View>
     );
   }

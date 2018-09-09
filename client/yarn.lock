@@ -1642,7 +1642,7 @@ base64-js@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.0.tgz#a39992d723584811982be5e290bb6a53d86700f1"
 
-base64-js@^1.1.2, base64-js@^1.2.0:
+base64-js@^1.0.2, base64-js@^1.1.2, base64-js@^1.2.0, base64-js@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.0.tgz#cab1e6118f051095e58b5281aea8c1cd22bfc0e3"
 
@@ -1788,6 +1788,13 @@ buffer-fill@^1.0.0:
 buffer-from@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.1.tgz#32713bc028f75c02fdb710d7c7bcec1f2c6070ef"
+
+buffer@^5.1.0:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.2.1.tgz#dd57fa0f109ac59c602479044dca7b8b3d0b71d6"
+  dependencies:
+    base64-js "^1.0.2"
+    ieee754 "^1.1.4"
 
 builtin-modules@^1.0.0:
   version "1.1.1"
@@ -2740,6 +2747,13 @@ fbjs@^0.8.0, fbjs@^0.8.14, fbjs@^0.8.16, fbjs@^0.8.4, fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
+fetch-everywhere@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/fetch-everywhere/-/fetch-everywhere-1.0.5.tgz#b2497f47a57d9026b3907c09756acf5f4bd34e8b"
+  dependencies:
+    node-fetch "^1.0.1"
+    whatwg-fetch ">=0.10.0"
+
 figures@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/figures/-/figures-2.0.0.tgz#3ab1a2d2a62c8bfb431a0c94cb797a2fce27c962"
@@ -3283,6 +3297,10 @@ idtoken-verifier@^1.1.2:
 idx@^2.1.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/idx/-/idx-2.4.0.tgz#e89e6650c889a44bf889f79d47f40fe09b4eeaa3"
+
+ieee754@^1.1.4:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.12.tgz#50bf24e5b9c8bb98af4964c941cdb0918da7b60b"
 
 ignore-walk@^3.0.1:
   version "3.0.1"
@@ -4728,6 +4746,62 @@ moment@2.x.x, moment@^2.10.6:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
+mongodb-stitch-bson@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/mongodb-stitch-bson/-/mongodb-stitch-bson-1.0.0.tgz#97d8dd10ec4962b66cc06ab30abe7a8157cab594"
+  dependencies:
+    buffer "^5.1.0"
+
+mongodb-stitch-bson@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/mongodb-stitch-bson/-/mongodb-stitch-bson-1.0.1.tgz#2dad51f6e30653d7a06e4dce295ec93257718df6"
+  dependencies:
+    buffer "^5.1.0"
+
+mongodb-stitch-core-sdk@^4.0.13:
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/mongodb-stitch-core-sdk/-/mongodb-stitch-core-sdk-4.0.13.tgz#9ff6431f0826449e15b4be9716c47c0052fa3ebf"
+  dependencies:
+    base64-js "^1.3.0"
+    fetch-everywhere "^1.0.5"
+    mongodb-stitch-bson "^1.0.0"
+    mongodb-stitch-extjson "^1.0.0"
+
+mongodb-stitch-core-services-mongodb-remote@^4.0.13:
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/mongodb-stitch-core-services-mongodb-remote/-/mongodb-stitch-core-services-mongodb-remote-4.0.13.tgz#33d1ae7fb610c3436e8f2c4b26c3c4c7edaa9fac"
+  dependencies:
+    mongodb-stitch-bson "^1.0.0"
+    mongodb-stitch-core-sdk "^4.0.13"
+
+mongodb-stitch-extjson@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/mongodb-stitch-extjson/-/mongodb-stitch-extjson-1.0.0.tgz#8307f0bf913f0ae56140438a0b7df523af30d647"
+  dependencies:
+    buffer "^5.1.0"
+    mongodb-stitch-bson "1.0.0"
+
+mongodb-stitch-react-native-core@^4.0.13:
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/mongodb-stitch-react-native-core/-/mongodb-stitch-react-native-core-4.0.13.tgz#36c1853bb1e36245be9c46dad9483500c2970050"
+  dependencies:
+    mongodb-stitch-bson "^1.0.0"
+    mongodb-stitch-core-sdk "^4.0.13"
+
+mongodb-stitch-react-native-sdk@^4.0.13:
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/mongodb-stitch-react-native-sdk/-/mongodb-stitch-react-native-sdk-4.0.13.tgz#0b75decdb046d840e39833741f4a4ec245a385aa"
+  dependencies:
+    mongodb-stitch-react-native-core "^4.0.13"
+    mongodb-stitch-react-native-services-mongodb-remote "^4.0.13"
+
+mongodb-stitch-react-native-services-mongodb-remote@^4.0.13:
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/mongodb-stitch-react-native-services-mongodb-remote/-/mongodb-stitch-react-native-services-mongodb-remote-4.0.13.tgz#e4689d70f5e5f10050c1a6b649cbd28f69ff438f"
+  dependencies:
+    mongodb-stitch-core-services-mongodb-remote "^4.0.13"
+    mongodb-stitch-react-native-core "^4.0.13"
+
 morgan@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.9.0.tgz#d01fa6c65859b76fcf31b3cb53a3821a311d8051"
@@ -5597,7 +5671,7 @@ react-native-safe-module@^1.1.0:
   dependencies:
     dedent "^0.6.0"
 
-react-native-scripts@1.14.0:
+react-native-scripts@^1.14.0:
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/react-native-scripts/-/react-native-scripts-1.14.0.tgz#1c0a71ea2194a3889055c54458e32730f5cd1ccc"
   dependencies:

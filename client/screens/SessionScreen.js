@@ -21,7 +21,7 @@ export default class SessionScreen extends React.Component {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.logoContainer}>
-          <Image style={styles.logo} source={require('../images/penn.png')} />
+          <Image style={styles.logo} source={require('../images/logo.png')} />
           <Text style={styles.title}>Join a Session</Text>
         </View>
         <View style={styles.formContainer}>
@@ -45,15 +45,17 @@ const styles = {
     marginTop: 35
   },
   logo: {
-    width: 150,
-    height: 150
+    width: 170,
+    height: 170
   },
   title: {
     color: '#FFF',
     marginTop: 30,
     width: 160,
     textAlign: 'center',
-    fontSize: 25
+    opacity: 0.9,
+    fontSize: 23,
+    fontWeight: 'bold'
   },
   joinContainer: {
     paddingVertical: 12,

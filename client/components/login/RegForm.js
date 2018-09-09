@@ -46,15 +46,7 @@ class RegistrationForm extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <TextInput
-          placeholder="username"
-          placeholderTextColor="rgba(255,255,255,0.8)"
-          autoCapitalize="none"
-          autoCorrect={false}
-          style={styles.input}
-          onChangeText={name => this.setState({ username: name })}
-          value={this.state.username}
-        />
+
         <TextInput
           placeholder="user@email.com"
           placeholderTextColor="rgba(255,255,255,0.8)"
