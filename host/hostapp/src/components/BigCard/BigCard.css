@@ -2,8 +2,13 @@
     height: 400px;
     text-align: center;
     align-items: center;
+    animation: cardfade 1s linear;
 }
 
+@keyframes cardfade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 .textStyle{
     border-width: 1px;
     border-left: none;
