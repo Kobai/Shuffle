@@ -62,7 +62,7 @@ class MusicScreen extends React.Component {
       .then(songs => this.setState({ songData: songs[0].songs }))
       .then(() => console.log(this.state.songData))
       .catch(err => console.log(err));
-
+    console.log(this.state.songData);
     console.disableYellowBox = true;
   }
 
@@ -103,8 +103,8 @@ class MusicScreen extends React.Component {
     );
   };
 
-  addVote = async () => {
-    //const client = await Stitch.initializeDefaultAppClient('pennapps-mnfjh'); //app ID
+  addVote = async title => {
+    console.log(title);
     const db = this.client
       .getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas')
       .db('data');
@@ -112,9 +112,8 @@ class MusicScreen extends React.Component {
     const result = await db
       .collection('playlist')
       .updateOne(
-        { title: 'This is America' },
-        { $set: { vote_count: 100 } },
-        {}
+        { 'songs.title': title },
+        { $inc: { 'songs.$.vote_count': 1 } }
       );
     console.log('55');
 
@@ -126,12 +125,22 @@ class MusicScreen extends React.Component {
   };
 
   render() {
+    let songArr = this.state.songData;
+    songArr = songArr.sort(function(a, b) {
+      if (a.vote_count > b.vote_count) {
+        return -1;
+      } else if (a.vote_count < b.vote_count) {
+        return 1;
+      } else {
+        return a.title > b.title ? -1 : 1;
+      }
+    });
     return (
       <View style={{ flex: 1 }}>
         <Header headerText="Shuffle " />
         <FlatList
           style={{ flex: 1 }}
-          data={this.state.songData}
+          data={songArr}
           renderItem={({ item }) => (
             <Card>
               <CardSection>
@@ -162,7 +171,10 @@ class MusicScreen extends React.Component {
                     backgroundColor: 'black'
                   }}
                 >
-                  <Button onPress={this.addVote} style={{ paddingTop: 33 }}>
+                  <Button
+                    onPress={() => this.addVote(item.title)}
+                    style={{ paddingTop: 33 }}
+                  >
                     <MaterialIcons name="add" size={25} />
                   </Button>
                 </View>
