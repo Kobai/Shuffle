@@ -1,0 +1,28 @@
+.classStyle{
+    height: 400px;
+    text-align: center;
+    align-items: center;
+}
+
+.textStyle{
+    border-width: 1px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-color: #7f8fa6;
+    background-color:white;
+    font-size: 1rem;
+    width: 98%;
+    margin: 5px;
+}
+
+.buttonStyle{
+    display:block;
+    border: none;
+    border-color: #7f8fa6;
+    cursor: pointer;
+    margin-left: 50px;
+    width: 300px;
+    background-color: white;
+    font-size: 1.1rem;
+}

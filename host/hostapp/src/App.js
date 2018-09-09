@@ -51,6 +51,7 @@ class App extends Component {
     }).then(this.getSongs) 
     .catch(err => console.log(err));
     socket.emit('voted','misc')
+    socket.emit('update_ranking','misc')
   }
   renderSongList() {
     let songArr = this.state.songData;
