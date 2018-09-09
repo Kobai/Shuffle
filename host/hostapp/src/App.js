@@ -93,6 +93,7 @@ class App extends Component {
       .then(this.getSongs)
       .catch(console.error);
     socket.on('update_ranking', this.getSongs);
+    this.interval = setInterval(this.getSongs,1000);
   }
 
   render() {
