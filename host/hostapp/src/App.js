@@ -50,6 +50,7 @@ class App extends Component {
         }
     }).then(this.getSongs)
     .then(()=>socket.emit('update_ranking','misc'))
+    .then(()=>socket.emit('voted','misc'))
     .catch(err => console.log(err));
     socket.emit('voted','misc');
     socket.emit('update_ranking','misc');
