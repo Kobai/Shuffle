@@ -26,12 +26,14 @@
     color: #22313f;
     font-size: 1.5rem;
     margin-top: -20px;
+    width: 200px;
 }
 
 .artist {
     color: #7f8fa6;
     font-size: 1.25rem;
     margin-top: -5px;
+    width: 200px;
 }
 
 .imgStyle {
@@ -59,7 +61,8 @@
 .ranking {
     float: right;
     margin-top: 5px;
-    margin-left: 280px;
+    margin-left: 120px;
+    width: 150px;
     color: #7f8fa6;
     font-size: 1.25rem;
 }

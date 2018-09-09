@@ -4,7 +4,7 @@ import './App.css';
 import {Helmet} from 'react-helmet';
 import {
   Stitch,
-  AnonymousCredential,
+  UserPasswordCredential,
   RemoteMongoClient
 } from "mongodb-stitch-browser-sdk";
 import Card  from "./components/Card/Card";
@@ -18,22 +18,43 @@ class App extends Component {
   constructor(props){
     super();
     this.state ={
-        songNames: []
+        songData: [],
+        currentSongName: "None being played",
+        currentSongId: ''
     };
+    this.getSongs = this.getSongs.bind(this);
+  }
+  updateCurrentSong = (song) =>{
+    console.log(song);
+    this.setState({currentSongName: song.name})
+    .catch(err=>console.log(err));
+  }
+  renderSongList(){
+    this.state.songData = this.state.songData.sort(function(a,b){
+      if(a.vote_count > b.vote_count){
+        return -1;
+      } else if(a.vote_count < b.vote_count){
+        return 1;
+      } else {
+        return a.title > b.title ? -1:1;
+      }
+    });
+    return this.state.songData.map((data,index) => <Card info={data} key={index} updateCurrentSong={this.updateCurrentSong}/>);
   }
   getSongs(){
      db.collection("playlist")
     .find({}, {limit: 50})
     .asArray()
-    .then(songs => this.setState({songNames: songs.name}))
-    .then(()=>console.log(this.state.songNames))
+    .then(songs => this.setState({ songData: songs[0].songs}))
+    .then(this.renderSongList())
     .catch(err => console.log(err));
   }
 
   componentDidMount(){
+    const credentials = new UserPasswordCredential("dj@pennapps.com","password123");
     client.auth
-    .loginWithCredential(new AnonymousCredential())
-    .then(this.getSong)
+    .loginWithCredential(credentials)
+    .then(this.getSongs)
     .catch(console.error);
   }
 
@@ -52,22 +73,13 @@ class App extends Component {
         </div>
           <YouTube
             className = "videoPlay"
-            videoId="QoitiIbdeaM"
+            videoId=""
             opts={opts} />
         <div className="leftSide">
-          Currently Playing: Fireflies
+          Currently Playing: {this.state.currentSong}
         </div>
         <div className="songChoice">
-          <Card info={{img: "https://img.youtube.com/vi/QoitiIbdeaM/0.jpg",songTitle: "hello", artist:"world"}}/>
-          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
-          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
-          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
-          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
-          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
-          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
-          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
-          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
-          <Card info={{img: "https://i.imgur.com/kKp0ot7.png",songTitle: "hello", artist:"world"}}/>
+          {this.renderSongList()}
         </div>
       </div>
     );

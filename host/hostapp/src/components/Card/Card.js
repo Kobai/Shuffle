@@ -7,13 +7,13 @@ class Card extends Component {
         return (
             <div className="cardStyle">
                 <div className="cardContent">
-                    <img src={this.props.info.img} className="imgStyle" />
-                    <img src={playbutton} className="playButton"/>
+                    <img src={"https://img.youtube.com/vi/"+this.props.info.youtube_link.split('=')[1]+"/0.jpg"} className="imgStyle" />
+                    <img src={playbutton} className="playButton" onClick = {()=> this.props.updateCurrentSong({id: this.props.info.youtube_link.split('=')[1], name: this.props.info.title})}/>
                     <div className = "textContainer">
-                        <div className = "songTitle">{this.props.info.songTitle}</div>
+                        <div className = "songTitle">{this.props.info.title}</div>
                         <div className = "artist">{this.props.info.artist}</div>
                     </div>
-                    <div className = "ranking">Votes: 12</div>
+                    <div className = "ranking">Votes: {this.props.info.vote_count}</div>
                 </div>
             </div>
         );
