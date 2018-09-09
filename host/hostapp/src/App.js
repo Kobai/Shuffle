@@ -7,6 +7,7 @@ import {
   RemoteMongoClient
 } from 'mongodb-stitch-browser-sdk';
 import Card from './components/Card/Card';
+import BigCard from './components/BigCard/BigCard';
 import YouTube from 'react-youtube';
 import socketIOClient from 'socket.io-client';
 import logo from './logo.png';
@@ -27,12 +28,30 @@ class App extends Component {
     };
     this.getSongs = this.getSongs.bind(this);
     this.updateCurrentSong = this.updateCurrentSong.bind(this);
+    this.addSong = this.addSong.bind(this);
     this.renderSongList = this.renderSongList.bind(this);
   }
   updateCurrentSong = song => {
     this.setState({ currentSongName: song.name });
     this.setState({ currentSongId: song.id });
   };
+  addSong = song =>{
+    console.log(song);
+    db.collection("playlist")
+    .updateOne({}, 
+        {$push:{
+            'songs': {
+                'youtube_link': song.link,
+                'title':  song.title,
+                'artist': song.artist,
+                'user_id':[],
+                'vote_count': 0
+            }
+        }
+    }).then(this.getSongs) 
+    .catch(err => console.log(err));
+    socket.emit('voted','misc')
+  }
   renderSongList() {
     let songArr = this.state.songData;
     songArr = songArr.sort(function(a, b) {
@@ -88,8 +107,8 @@ class App extends Component {
           <img
             src={logo}
             style={{
-              height: '80px',
-              width: '80px',
+              height: '75px',
+              width: '75px',
               marginTop: '10px',
               marginLeft: '10px'
             }}
@@ -98,6 +117,7 @@ class App extends Component {
             style={{
               color: 'white',
               fontSize: '2.5rem',
+              fontWeight: 'bold',
               marginTop: '25px',
               marginLeft: '10px'
             }}
@@ -113,7 +133,10 @@ class App extends Component {
         <div className="leftSide">
           Currently Playing: {this.state.currentSongName}
         </div>
-        <div className="songChoice">{this.renderSongList()}</div>
+        <div className="songChoice">
+          {this.renderSongList()}
+          <BigCard addSong={this.addSong} />
+        </div>
       </div>
     );
   }
